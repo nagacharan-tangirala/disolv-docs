@@ -30,3 +30,6 @@ Several design aspects are incorporated to achieve this and we will look at them
 - [Streams](./design/streams.md)
 - [Messages](./design/messages.md)
 - [Discrete-time](./design/discrete.md)
+
+
+> *The details about the choices and their impact on the simulation is compared in the [Disolv introductory article](https://doi.org/10.1145/3615979.3656062) published at PADS Conference, 2024.*
