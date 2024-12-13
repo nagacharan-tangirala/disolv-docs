@@ -25,11 +25,11 @@ Hence, Disolv conceptually looks as shown below:
 How we reach from the VANET simulator to ITS simulator is the main focus of this section.
 Several design aspects are incorporated to achieve this and we will look at them in detail.
 
-- [Mobility](./design/mobility.md)
-- [Links](./design/links.md)
-- [Streams](./design/streams.md)
-- [Messages](./design/messages.md)
-- [Discrete-time](./design/discrete.md)
+- [Mobility](./mobility.md)
+- [Links](./links.md)
+- [Streams](./streams.md)
+- [Messages](./messages.md)
+- [Discrete-time](./discrete.md)
 
 
 > *The details about the choices and their impact on the simulation is compared in the [Disolv introductory article](https://doi.org/10.1145/3615979.3656062) published at PADS Conference, 2024.*

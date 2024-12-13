@@ -193,16 +193,11 @@ This does not concern with any <em>link</em> in the context of networking.
 In other words, the link data is a mere information of neighbors available to each agent, not the channel characteristics.
 Our initial implementation of the link calculation module was in Python.
 Considering the enormous time consumed by this process, we ported the implementation to Rust, which resulted in substantial performance gains.
-Below is the table containing execution times of link calculation modules.</p>
+The table highlights the performance gains obtained by porting the link calculation module to Rust.</p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Nodes</th><th style="text-align: center">Simulation Duration</th><th style="text-align: center">Python</th><th style="text-align: right">Rust</th></tr></thead><tbody>
 <tr><td style="text-align: left">2200</td><td style="text-align: center">3800s</td><td style="text-align: center">2400s</td><td style="text-align: right">120s</td></tr>
 </tbody></table>
 </div>
-<p>The table highlights the performance gains obtained by porting the link calculation module to Rust.
-The current model of link has two modes of computing links.
-One is the circular disk model, where all the neighbours within a certain radius are considered to have links with the agent.
-Another model is the n-nearest neighbour model, where a user-defined number of neighbours are considered as links of an agent.
-These models can be further extended to support directional radios, region-based communication ranges and many other real-world aspects.</p>
 <h3 id="traces"><a class="header" href="#traces">Traces</a></h3>
 <p>Vehicular traces can be obtained from any mobility simulator or real-world sources.
 A pre-processing module is provided to convert the mobility traces to Disolv-readable format.

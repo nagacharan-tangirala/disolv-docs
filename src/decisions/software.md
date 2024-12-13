@@ -22,17 +22,12 @@ This does not concern with any _link_ in the context of networking.
 In other words, the link data is a mere information of neighbors available to each agent, not the channel characteristics.
 Our initial implementation of the link calculation module was in Python. 
 Considering the enormous time consumed by this process, we ported the implementation to Rust, which resulted in substantial performance gains.
-Below is the table containing execution times of link calculation modules. 
+The table highlights the performance gains obtained by porting the link calculation module to Rust.
 
 | Nodes | Simulation Duration | Python | Rust |
 | :--- | :----: | :----: |    ---: |
 | 2200 | 3800s | 2400s | 120s |
 
-The table highlights the performance gains obtained by porting the link calculation module to Rust.
-The current model of link has two modes of computing links.
-One is the circular disk model, where all the neighbours within a certain radius are considered to have links with the agent.
-Another model is the n-nearest neighbour model, where a user-defined number of neighbours are considered as links of an agent.
-These models can be further extended to support directional radios, region-based communication ranges and many other real-world aspects.
 
 ### Traces
 

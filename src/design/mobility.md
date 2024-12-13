@@ -4,8 +4,8 @@ One of the components of a VANET simulator is the mobility component.
 Mobility modeling is a complex task in itself and has a dedicated community behind it.
 Some of the mobility simulators are [CityMoS](https://citymos.net/), [PTV VISSIM](https://www.ptvgroup.com/en/products/ptv-vissim),
 [SUMO](https://sumo.dlr.de/docs/index.html), [MATSim](https://www.matsim.org/) etc.
-This is unlike the wireless network simulations, where the node mobility can be easily modeled with a random mobility model.
-Hence, the modeling complexity is high and has a performance cost.
+This is unlike the wireless mobile network simulations, where the node mobility can be easily modeled with a random mobility model.
+Hence, the modeling complexity is high and comes with a performance cost.
 
 On a broad level, ITS applications can be classified into two types.
 The first type is where explicit control of the vehicles is essential.
@@ -19,8 +19,8 @@ This removes a significant performance overhead from the simulations, thereby al
 If the application is simple enough, then it allows room for extensive scalability.
 
 The approach restricts the usability of Disolv for the applications that control the vehicles.
-However, majority of the applications are on the planning side where such control is not desired. 
-The introduction of 5G and 6G will further explode the possible ITS applications.
+Fortunately, we cover planning studies category which is one of the majorly studied categories by the community.
+The introduction of 5G and 6G will further explode the possible studies under the category.
 AI is expected to be a major player in both network management as well as on the application side.
 The introduction of smart city paradigm and the continued embracing of its ideas put more onus on mobility to interact with other smart city systems.
 This increases the possibilities even more and leads to several new auxiliary use cases that do not require vehicular control.

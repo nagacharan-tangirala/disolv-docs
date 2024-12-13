@@ -195,13 +195,6 @@ Additional device-specific configuration is allowed through parameterization.</p
 <p><em>disolv-input</em> and <em>disolv-output</em> serve the purpose of reading the input and writing the output respectively.
 It is sufficient to know the <strong>Core</strong> and the <strong>Model</strong> to handle input and output operations.
 As a result, the implementations are accessible to all the custom implementations of the agents.</p>
-<h3 id="device"><a class="header" href="#device">Device</a></h3>
-<p><em>disolv-device</em> is the outermost layer in the architecture that is dependent on all the above layers.
-The implementation is scenario dependent.
-Disolv supports multiiple types of devices, each with their own models.
-If there are differences beyond the model parameters, then an entirely new device type can also be defined.
-The advantage of the onion architecture is that the multiple device implementation does not require any modifications to the core.
-If necessary traits are implemented, then any number of custom device implementations can be provided and Disolv will simulate them.</p>
 
                     </main>
 

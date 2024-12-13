@@ -29,12 +29,3 @@ _disolv-input_ and _disolv-output_ serve the purpose of reading the input and wr
 It is sufficient to know the __Core__ and the __Model__ to handle input and output operations.
 As a result, the implementations are accessible to all the custom implementations of the agents.
 
-
-### Device
-
-_disolv-device_ is the outermost layer in the architecture that is dependent on all the above layers.
-The implementation is scenario dependent. 
-Disolv supports multiiple types of devices, each with their own models.
-If there are differences beyond the model parameters, then an entirely new device type can also be defined.
-The advantage of the onion architecture is that the multiple device implementation does not require any modifications to the core.
-If necessary traits are implemented, then any number of custom device implementations can be provided and Disolv will simulate them.

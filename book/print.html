@@ -174,11 +174,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="disolv"><a class="header" href="#disolv">Disolv</a></h1>
+                        <p align="center">
+    <img style="max-width: 65%; max-height: 40%;" src="./resources/images/intro/disolv_logo.svg"
+</p>
 <p>Disolv stands for Dataflow-centric Integrated Simulator Of Large-scale VANETs.
 Disolv is implemented in Rust to enable large scale simulation studies of connected traffic applications.
 This documentation contains the description and the design of the simulator.</p>
-<p>Source code is available <a href="https://github.com/nagacharan-tangirala/disolv">here</a></p>
+<p>The code for the simulator is <a href="https://github.com/nagacharan-tangirala/disolv">available.</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
 <p>If you are on a new installation of Ubuntu, install the necessary build tools using the command:</p>
@@ -193,7 +195,7 @@ This documentation contains the description and the design of the simulator.</p>
 <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 </code></pre>
 <p>Check the <a href="https://www.rust-lang.org/tools/install">official link</a> if the above command fails.</p>
-<h2 id="disolv-1"><a class="header" href="#disolv-1">Disolv</a></h2>
+<h2 id="disolv"><a class="header" href="#disolv">Disolv</a></h2>
 <ol>
 <li>Download the latest <strong>main</strong> branch using the command:</li>
 </ol>
@@ -303,11 +305,11 @@ Hence, Disolv conceptually looks as shown below:</p>
 <p>How we reach from the VANET simulator to ITS simulator is the main focus of this section.
 Several design aspects are incorporated to achieve this and we will look at them in detail.</p>
 <ul>
-<li><a href="design/./design/mobility.html">Mobility</a></li>
-<li><a href="design/./design/links.html">Links</a></li>
-<li><a href="design/./design/streams.html">Streams</a></li>
-<li><a href="design/./design/messages.html">Messages</a></li>
-<li><a href="design/./design/discrete.html">Discrete-time</a></li>
+<li><a href="design/./mobility.html">Mobility</a></li>
+<li><a href="design/./links.html">Links</a></li>
+<li><a href="design/./streams.html">Streams</a></li>
+<li><a href="design/./messages.html">Messages</a></li>
+<li><a href="design/./discrete.html">Discrete-time</a></li>
 </ul>
 <blockquote>
 <p><em>The details about the choices and their impact on the simulation is compared in the <a href="https://doi.org/10.1145/3615979.3656062">Disolv introductory article</a> published at PADS Conference, 2024.</em></p>
@@ -317,8 +319,8 @@ Several design aspects are incorporated to achieve this and we will look at them
 Mobility modeling is a complex task in itself and has a dedicated community behind it.
 Some of the mobility simulators are <a href="https://citymos.net/">CityMoS</a>, <a href="https://www.ptvgroup.com/en/products/ptv-vissim">PTV VISSIM</a>,
 <a href="https://sumo.dlr.de/docs/index.html">SUMO</a>, <a href="https://www.matsim.org/">MATSim</a> etc.
-This is unlike the wireless network simulations, where the node mobility can be easily modeled with a random mobility model.
-Hence, the modeling complexity is high and has a performance cost.</p>
+This is unlike the wireless mobile network simulations, where the node mobility can be easily modeled with a random mobility model.
+Hence, the modeling complexity is high and comes with a performance cost.</p>
 <p>On a broad level, ITS applications can be classified into two types.
 The first type is where explicit control of the vehicles is essential.
 An example would be <a href="https://ieeexplore.ieee.org/abstract/document/8280871">truck platooning</a> studies.
@@ -330,8 +332,8 @@ Only vehicular traces are sufficient to represent the vehicular mobility.
 This removes a significant performance overhead from the simulations, thereby allowing the user to spend the computing on their application.
 If the application is simple enough, then it allows room for extensive scalability.</p>
 <p>The approach restricts the usability of Disolv for the applications that control the vehicles.
-However, majority of the applications are on the planning side where such control is not desired.
-The introduction of 5G and 6G will further explode the possible ITS applications.
+Fortunately, we cover planning studies category which is one of the majorly studied categories by the community.
+The introduction of 5G and 6G will further explode the possible studies under the category.
 AI is expected to be a major player in both network management as well as on the application side.
 The introduction of smart city paradigm and the continued embracing of its ideas put more onus on mobility to interact with other smart city systems.
 This increases the possibilities even more and leads to several new auxiliary use cases that do not require vehicular control.
@@ -351,17 +353,104 @@ Because of the motion of the agents, this calculation is essential at each time 
 A significant time of the simulation is spent in this operation when the scale of the simulation is extremely large.</p>
 <p>Disolv addresses the issue by allowing an input of neighbour information.
 Similar to vehicular positions, the data for each agent and its neighbours can be fed as an input to the simulation.
-For the convenience of the users, Disolv comes with an executable that enables preparation of this file.
+For the convenience of the users, Disolv comes with an <a href="design/../execs/links.html">executable</a> that enables preparation of this file.
 This is a one-time step performed for each simulation and is required whenever there is a change in the positions file.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="streams"><a class="header" href="#streams">Streams</a></h1>
+<p>Links are calculated between two classes of agents.
+The first class of the agent is the source with respect to which the second class agents are assigned as neighbours.
+There are several types of links that can be calculated:</p>
+<h3 id="static"><a class="header" href="#static">Static</a></h3>
+<p>If the source and target agent classes are static (RSUs, Edge Servers), then the links need not be calculated for every time step.
+In such cases, only the links at time step 0 are calculated.</p>
+<h3 id="dynamic"><a class="header" href="#dynamic">Dynamic</a></h3>
+<p>This will calculate links between source and target for all the time step.
+This is required when one of the agent classes are moving (vehicles, drones).</p>
+<h3 id="unicast"><a class="header" href="#unicast">Unicast</a></h3>
+<p>If a source agent can talk to only one agent of the target class at each time step, then such links must be calculated using Unicast method.
+Depending on the choice, user can assign the nearest target agent.</p>
+<h3 id="circular"><a class="header" href="#circular">Circular</a></h3>
+<p>This gives all the target agents around a given source agent at each time step.
+This is similar to a broadcast.</p>
+<h3 id="extensions"><a class="header" href="#extensions">Extensions</a></h3>
+<p>Further models can also be easily added for calculating the links.</p>
+<h2 id="real-world-traces"><a class="header" href="#real-world-traces">Real-world Traces</a></h2>
+<p>Any real-world traces can also be provided.
+For instance, an ns-3 scenario can be used to generate the links data.
+Whenever, there was a packet failure, we can assign no link in this case.
+What this enables is a realistic communication and vehicular scenario, on top of which other planning applications can be evaluated.
+In other words, disolv can be used a simulation replay tool.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="streaming"><a class="header" href="#streaming">Streaming</a></h1>
+<p>As we saw in the <a href="design/./mobility.html">mobility</a> and <a href="design/./links.html">links</a> sections, disolv needs several input files for a simulation.
+Because of the large-scale support goals, the size of the individual files can be significantly large.
+Mobility trace files for a city like Cologne take 20GB.
+If we add three to five different link files (vehicle-vehicle, vehicle-rsu, rsu-vehicle), then the input size is enormous.
+On the output side, such large scenarios also generate significant data.
+This can prove to be detrimental both for the performance as well as the memory.</p>
+<p>Disolv is designed to overcome this issue through data streaming abilities.
+Both the input and output files can be streamed at regular intervals of configurable time steps.
+Input and output are handled in the form of chunks.
+This solves the memory issues as the amount of data to be kept in the memory is only one chunk of the entire simulation duration.
+This is similar to digital twins.</p>
+<p>Parquet files are used for their robust and performant behavior.
+Disolv can be extended to support any file format as requried by the user.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="messages"><a class="header" href="#messages">Messages</a></h1>
+<p>Any realistic VANET simulator represents the interactions through packets.
+This is required to also model the failures due to the network resource constraints.
+Since we are only modeling interactions, packet-level modelling is not necessary.
+Instead, we model the interactions using a compact structure called Message.</p>
+<p>Message is built mainly with the metadata regarding the information that is transmitted.
+It contains the statistic such as size, counts, type regarding the data.
+Although this leads to unrealistic network, application studies that are not focussed on these aspects can reasonably benefit from this simplification.
+Any forwarded data from the downstream is also aggregated and forwarded to the upstream.</p>
+<p>For instance, consider the scenario where vehicles are uploading images to the RSU.
+RSUs are all connected to a central entity that is responsible to collect the images from the vehicles.
+Disolv can model this scenario.
+Vehicles can upload their data to the nearest RSU as they travel along the network.
+RSUs collect all the data that the vehicles uploaded into a single message and forward that to the controller.
+If we modelled this in the form of packets, we need too many packet instances to represent the interaction.
+Instead, we represent all of that with one single message.</p>
+<h3 id="message-structure"><a class="header" href="#message-structure">Message structure</a></h3>
+<p>One message is exchanged between a source and target agent.
+It contains the following information:</p>
+<pre><code>Message = {
+    message_type: Enum,
+    message_units: List,
+    gathered_units: List,
+    metadata: Struct,
+    actions: List,
+}
+</code></pre>
+<h4 id="message-type"><a class="header" href="#message-type">Message Type</a></h4>
+<p>Indicates the message type that is being sent.</p>
+<h4 id="message-units"><a class="header" href="#message-units">Message Units</a></h4>
+<p>This is an individual unit of a message that needs to be transmitted.
+Think of it as a unit of application data.
+Hence, this is a list to support scenarios where multiple applications want to communicate (voice, data, video).</p>
+<h4 id="gathered-units"><a class="header" href="#gathered-units">Gathered Units</a></h4>
+<p>These are all the application data that were forwarded by the agents in the upstream/downstream.</p>
+<h4 id="metadata"><a class="header" href="#metadata">Metadata</a></h4>
+<p>This contains all the necessary statistics of the message, including size, counts, selected link etc.
+The metadata is updated based on the message units that are supposted to be followed to the target.</p>
+<h4 id="actions"><a class="header" href="#actions">Actions</a></h4>
+<p>Actions are integral to the interactions between the agents.
+Each agent can receive either one or more messages from other agents.
+What to do with each individual message unit is indicated by the action.
+For instance, we can ask an agent to consume all <strong>image</strong> type messages but forward all <strong>video</strong> message types.
+This is entirely configurable by the user.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="discrete-time"><a class="header" href="#discrete-time">Discrete-time</a></h1>
+<p>This follows naturally from all the other design choices we have made so far.
+Since the interactions are simpler, we don't need discrete-event paradigm and its complexity despite its fidelity guarantees.
+Agents can interact with each other following weakly-ordered priority scheme through discrete-time paradigm.
+This essentially means that the agent interaction order can be controlled to only a certain extent.
+We cannot control that vehicle ID A sends a message before vehicle ID B.</p>
+<p>That does not mean that we have no control at all.
+We can modify order at the agent class level.
+For example, we can specify that vehicles send their messages first before RSUs do or vice versa for a downstream scenario.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="design-decisions"><a class="header" href="#design-decisions">Design decisions</a></h1>
 <p>In addition to the conceptual decisions, some other design decisions are necessary to achieve the goals we set out for Disolv.
 These are discussed in this section.</p>
 <ul>
-<li><a href="decisions/./decisions/software.html">Software</a></li>
-<li><a href="decisions/./decisions/architecture.html">Architecture</a></li>
+<li><a href="decisions/./software.html">Software</a></li>
+<li><a href="decisions/./architecture.html">Architecture</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="software-decisions"><a class="header" href="#software-decisions">Software Decisions</a></h1>
 <h3 id="rust"><a class="header" href="#rust">Rust</a></h3>
@@ -383,16 +472,11 @@ This does not concern with any <em>link</em> in the context of networking.
 In other words, the link data is a mere information of neighbors available to each agent, not the channel characteristics.
 Our initial implementation of the link calculation module was in Python.
 Considering the enormous time consumed by this process, we ported the implementation to Rust, which resulted in substantial performance gains.
-Below is the table containing execution times of link calculation modules.</p>
+The table highlights the performance gains obtained by porting the link calculation module to Rust.</p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Nodes</th><th style="text-align: center">Simulation Duration</th><th style="text-align: center">Python</th><th style="text-align: right">Rust</th></tr></thead><tbody>
 <tr><td style="text-align: left">2200</td><td style="text-align: center">3800s</td><td style="text-align: center">2400s</td><td style="text-align: right">120s</td></tr>
 </tbody></table>
 </div>
-<p>The table highlights the performance gains obtained by porting the link calculation module to Rust.
-The current model of link has two modes of computing links.
-One is the circular disk model, where all the neighbours within a certain radius are considered to have links with the agent.
-Another model is the n-nearest neighbour model, where a user-defined number of neighbours are considered as links of an agent.
-These models can be further extended to support directional radios, region-based communication ranges and many other real-world aspects.</p>
 <h3 id="traces"><a class="header" href="#traces">Traces</a></h3>
 <p>Vehicular traces can be obtained from any mobility simulator or real-world sources.
 A pre-processing module is provided to convert the mobility traces to Disolv-readable format.
@@ -421,13 +505,6 @@ Additional device-specific configuration is allowed through parameterization.</p
 <p><em>disolv-input</em> and <em>disolv-output</em> serve the purpose of reading the input and writing the output respectively.
 It is sufficient to know the <strong>Core</strong> and the <strong>Model</strong> to handle input and output operations.
 As a result, the implementations are accessible to all the custom implementations of the agents.</p>
-<h3 id="device"><a class="header" href="#device">Device</a></h3>
-<p><em>disolv-device</em> is the outermost layer in the architecture that is dependent on all the above layers.
-The implementation is scenario dependent.
-Disolv supports multiiple types of devices, each with their own models.
-If there are differences beyond the model parameters, then an entirely new device type can also be defined.
-The advantage of the onion architecture is that the multiple device implementation does not require any modifications to the core.
-If necessary traits are implemented, then any number of custom device implementations can be provided and Disolv will simulate them.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="core-1"><a class="header" href="#core-1">Core</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="devices"><a class="header" href="#devices">Devices</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="vehicles"><a class="header" href="#vehicles">Vehicles</a></h3>
