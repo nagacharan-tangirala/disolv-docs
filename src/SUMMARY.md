@@ -22,10 +22,6 @@
 
 - [Library Crates](./crates/crates.md)
     - [Core](./crates/core/core.md)
-    - [Devices](./crates/devices/devices.md)
-        - [Vehicles](./crates/devices/vehicles.md)
-        - [RSU](./crates/devices/rsu.md)
-        - [Controller](./crates/devices/controller.md)
     - [Models](./crates/models/models.md)
     - [Network](./crates/network/network.md)
         - [Resources](./crates/network/resources.md)
@@ -37,5 +33,6 @@
 - [Executables](./execs/execs.md)
     - [V2X](./execs/v2x.md)
     - [Links](./execs/links.md)
+    - [FL](./execs/fl.md)
 
 - [Workflow](./workflow/workflow.md)

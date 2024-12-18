@@ -1,5 +1,5 @@
 <p align="center">
-    <img style="max-width: 65%; max-height: 40%;" src="./resources/images/intro/disolv_logo.svg"
+    <img style="max-width: 80%; max-height: 60%;" src="./resources/images/intro/disolv_logo.svg"
 </p>
 
 Disolv stands for Dataflow-centric Integrated Simulator Of Large-scale VANETs.

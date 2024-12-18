@@ -6,7 +6,7 @@ The problem under study constitutes the application.
 Together, the architecture looks as shown below:
 
 <p align="center">
-  <img style="max-width: 45%; height: auto;" src="../resources/images/design/vanet_sim.png">
+  <img style="max-width: 55%; height: auto;" src="../resources/images/design/vanet_sim.png">
 </p>
 
 This is how any VANET simulator such as Veins is modeled.
@@ -19,7 +19,7 @@ Hence, Disolv conceptually looks as shown below:
 
 
 <p align="center">
-  <img style="max-width: 45%; height: auto;" src="../resources/images/design/sim_concept.png">
+  <img style="max-width: 55%; height: auto;" src="../resources/images/design/sim_concept.png">
 </p>
 
 How we reach from the VANET simulator to ITS simulator is the main focus of this section.

@@ -32,5 +32,5 @@ As of now, SUMO is supported.
 This has an advantage of feeding a real-world mobility data as an input to the simulator.
 
 <p align="center">
-  <img style="max-width: 45%; height: auto;" src="../resources/images/design/mobility-pre.png">
+  <img style="max-width: 75%; height: auto;" src="../resources/images/design/mobility-pre.png">
 </p>
