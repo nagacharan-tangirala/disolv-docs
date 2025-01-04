@@ -1,5 +1,7 @@
 # Installation
 
+Disolv is tested in Ubuntu and Macbook Pro. It should technically work with Windows but that is not tested.
+
 ## Prerequisites
 
 If you are on a new installation of Ubuntu, install the necessary build tools using the command:
@@ -7,13 +9,14 @@ If you are on a new installation of Ubuntu, install the necessary build tools us
 sudo apt-get install build-essential
 ```
 
-For Macbook, you need homebrew and Xcode. Get the XCode from the App store. Install Homebrew with the command:
+For Mac, you need homebrew and Xcode. Get the XCode from the App store. Install Homebrew with the command:
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 Check the latest command from the [official Homebrew site](https://brew.sh/) if the above command fails.
 
+The rest of the steps are common for any system.
 ## Rust toolchain
 
 Rust toolchain is essential for the simulator to work. At the time of writing this, you can use the following command to install the necessary toolchain: 
